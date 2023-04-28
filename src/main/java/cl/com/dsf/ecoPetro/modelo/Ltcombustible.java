@@ -47,7 +47,9 @@ public class Ltcombustible implements Serializable {
     @NotNull
     @Column(name = "LitrosTotales")
     private int litrosTotales;
-    @Size(max = 200)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
     @Column(name = "RutaFotoCargas")
     private String rutaFotoCargas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKIdCombustible")
@@ -60,9 +62,10 @@ public class Ltcombustible implements Serializable {
         this.idCombustible = idCombustible;
     }
 
-    public Ltcombustible(Integer idCombustible, int litrosTotales) {
+    public Ltcombustible(Integer idCombustible, int litrosTotales, String rutaFotoCargas) {
         this.idCombustible = idCombustible;
         this.litrosTotales = litrosTotales;
+        this.rutaFotoCargas = rutaFotoCargas;
     }
 
     public Integer getIdCombustible() {

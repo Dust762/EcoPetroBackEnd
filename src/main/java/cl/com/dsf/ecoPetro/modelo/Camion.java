@@ -11,7 +11,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,14 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Camion.findByIdCamion", query = "SELECT c FROM Camion c WHERE c.idCamion = :idCamion"),
     @NamedQuery(name = "Camion.findByPatente", query = "SELECT c FROM Camion c WHERE c.patente = :patente"),
     @NamedQuery(name = "Camion.findByMarca", query = "SELECT c FROM Camion c WHERE c.marca = :marca"),
-    @NamedQuery(name = "Camion.findByCapacidad", query = "SELECT c FROM Camion c WHERE c.capacidad = :capacidad"),
-    @NamedQuery(name = "Camion.findByOperativo", query = "SELECT c FROM Camion c WHERE c.operativo = :operativo")})
+    @NamedQuery(name = "Camion.findByCapacidad", query = "SELECT c FROM Camion c WHERE c.capacidad = :capacidad")})
 public class Camion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idCamion")
     private Integer idCamion;
     @Basic(optional = false)
@@ -57,14 +60,13 @@ public class Camion implements Serializable {
     @NotNull
     @Column(name = "Capacidad")
     private short capacidad;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Operativo")
-    private short operativo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidCamion")
     private List<Chofer> choferList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKIdCamion")
     private List<Fallo> falloList;
+    @JoinColumn(name = "FK_idEstadoCamion", referencedColumnName = "idEstadoCamion")
+    @ManyToOne(optional = false)
+    private EstadoCamion fKidEstadoCamion;
 
     public Camion() {
     }
@@ -73,12 +75,11 @@ public class Camion implements Serializable {
         this.idCamion = idCamion;
     }
 
-    public Camion(Integer idCamion, String patente, String marca, short capacidad, short operativo) {
+    public Camion(Integer idCamion, String patente, String marca, short capacidad) {
         this.idCamion = idCamion;
         this.patente = patente;
         this.marca = marca;
         this.capacidad = capacidad;
-        this.operativo = operativo;
     }
 
     public Integer getIdCamion() {
@@ -113,14 +114,6 @@ public class Camion implements Serializable {
         this.capacidad = capacidad;
     }
 
-    public short getOperativo() {
-        return operativo;
-    }
-
-    public void setOperativo(short operativo) {
-        this.operativo = operativo;
-    }
-
     @JsonbTransient
     public List<Chofer> getChoferList() {
         return choferList;
@@ -137,6 +130,14 @@ public class Camion implements Serializable {
 
     public void setFalloList(List<Fallo> falloList) {
         this.falloList = falloList;
+    }
+
+    public EstadoCamion getFKidEstadoCamion() {
+        return fKidEstadoCamion;
+    }
+
+    public void setFKidEstadoCamion(EstadoCamion fKidEstadoCamion) {
+        this.fKidEstadoCamion = fKidEstadoCamion;
     }
 
     @Override

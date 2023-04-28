@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,7 +42,7 @@ public class Fallo implements Serializable {
     @Column(name = "Descripcion")
     private String descripcion;
     @JoinColumn(name = "FK_IdEstado", referencedColumnName = "idEstado")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Estado fKIdEstado;
     @JoinColumn(name = "FK_IdCamion", referencedColumnName = "idCamion")
     @ManyToOne(optional = false)

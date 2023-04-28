@@ -6,6 +6,7 @@ package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,13 +28,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author thege
  */
 @Entity
-@Table(name = "estadousuarios")
+@Table(name = "estado_usuarios")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoUsuarios.findAll", query = "SELECT e FROM EstadoUsuarios e"),
-    @NamedQuery(name = "EstadoUsuarios.findByIdEstadoUsuarios", query = "SELECT e FROM EstadoUsuarios e WHERE e.idEstadoUsuarios = :idEstadoUsuarios"),
-    @NamedQuery(name = "EstadoUsuarios.findByNombreEstadi", query = "SELECT e FROM EstadoUsuarios e WHERE e.nombreEstadi = :nombreEstadi")})
-public class EstadoUsuarios implements Serializable {
+    @NamedQuery(name = "EstadoUsuario.findAll", query = "SELECT e FROM EstadoUsuario e"),
+    @NamedQuery(name = "EstadoUsuario.findByIdEstadoUsuarios", query = "SELECT e FROM EstadoUsuario e WHERE e.idEstadoUsuarios = :idEstadoUsuarios"),
+    @NamedQuery(name = "EstadoUsuario.findByNombreEstado", query = "SELECT e FROM EstadoUsuario e WHERE e.nombreEstado = :nombreEstado")})
+public class EstadoUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,21 +45,21 @@ public class EstadoUsuarios implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "NombreEstadi")
-    private String nombreEstadi;
+    @Column(name = "NombreEstado")
+    private String nombreEstado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estadoUsuario")
     private List<Usuario> usuarioList;
 
-    public EstadoUsuarios() {
+    public EstadoUsuario() {
     }
 
-    public EstadoUsuarios(Integer idEstadoUsuarios) {
+    public EstadoUsuario(Integer idEstadoUsuarios) {
         this.idEstadoUsuarios = idEstadoUsuarios;
     }
 
-    public EstadoUsuarios(Integer idEstadoUsuarios, String nombreEstadi) {
+    public EstadoUsuario(Integer idEstadoUsuarios, String nombreEstado) {
         this.idEstadoUsuarios = idEstadoUsuarios;
-        this.nombreEstadi = nombreEstadi;
+        this.nombreEstado = nombreEstado;
     }
 
     public Integer getIdEstadoUsuarios() {
@@ -69,15 +70,15 @@ public class EstadoUsuarios implements Serializable {
         this.idEstadoUsuarios = idEstadoUsuarios;
     }
 
-    public String getNombreEstadi() {
-        return nombreEstadi;
+    public String getNombreEstado() {
+        return nombreEstado;
     }
 
-    public void setNombreEstadi(String nombreEstadi) {
-        this.nombreEstadi = nombreEstadi;
+    public void setNombreEstado(String nombreEstado) {
+        this.nombreEstado = nombreEstado;
     }
 
-    @XmlTransient
+    @JsonbTransient
     public List<Usuario> getUsuarioList() {
         return usuarioList;
     }
@@ -96,10 +97,10 @@ public class EstadoUsuarios implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EstadoUsuarios)) {
+        if (!(object instanceof EstadoUsuario)) {
             return false;
         }
-        EstadoUsuarios other = (EstadoUsuarios) object;
+        EstadoUsuario other = (EstadoUsuario) object;
         if ((this.idEstadoUsuarios == null && other.idEstadoUsuarios != null) || (this.idEstadoUsuarios != null && !this.idEstadoUsuarios.equals(other.idEstadoUsuarios))) {
             return false;
         }
@@ -108,7 +109,7 @@ public class EstadoUsuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "cl.com.dsf.ecoPetro.modelo.EstadoUsuarios[ idEstadoUsuarios=" + idEstadoUsuarios + " ]";
+        return "cl.com.dsf.ecoPetro.modelo.EstadoUsuario[ idEstadoUsuarios=" + idEstadoUsuarios + " ]";
     }
     
 }

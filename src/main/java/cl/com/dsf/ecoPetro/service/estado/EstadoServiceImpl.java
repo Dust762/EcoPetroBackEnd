@@ -14,8 +14,7 @@ import javax.inject.Inject;
 public class EstadoServiceImpl implements EstadoService, EstadoServiceRemote, EstadoServiceWs {
     @Inject
     private estadoDao ed;
-    @Inject
-    private falloDao fd;
+    
     @Resource
     private SessionContext contexto;
     @Override

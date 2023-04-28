@@ -68,7 +68,7 @@ public class Usuario implements Serializable {
     private Chofer chofer;
     @JoinColumn(name = "EstadoUsuario", referencedColumnName = "idEstadoUsuarios")
     @ManyToOne(optional = false)
-    private EstadoUsuarios estadoUsuario;
+    private EstadoUsuario estadoUsuario;
     @JoinColumn(name = "FK_TipoUsuario", referencedColumnName = "idTipo_Usuarios")
     @ManyToOne(optional = false)
     private TipoUsuario fKTipoUsuario;
@@ -136,11 +136,11 @@ public class Usuario implements Serializable {
         this.chofer = chofer;
     }
 
-    public EstadoUsuarios getEstadoUsuario() {
+    public EstadoUsuario getEstadoUsuario() {
         return estadoUsuario;
     }
 
-    public void setEstadoUsuario(EstadoUsuarios estadoUsuario) {
+    public void setEstadoUsuario(EstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }
 

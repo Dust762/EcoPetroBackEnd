@@ -6,6 +6,7 @@ package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -91,7 +92,7 @@ public class Chofer implements Serializable {
         this.fKidCamion = fKidCamion;
     }
 
-    @XmlTransient
+    @JsonbTransient
     public List<Guia> getGuiaList() {
         return guiaList;
     }

@@ -18,9 +18,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author thege
+ */
 @Entity
 @Table(name = "estados")
 @XmlRootElement
@@ -36,7 +42,9 @@ public class Estado implements Serializable {
     @Basic(optional = false)
     @Column(name = "idEstado")
     private Integer idEstado;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "EstadoNombre")
     private String estadoNombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKIdEstado")
@@ -47,6 +55,11 @@ public class Estado implements Serializable {
 
     public Estado(Integer idEstado) {
         this.idEstado = idEstado;
+    }
+
+    public Estado(Integer idEstado, String estadoNombre) {
+        this.idEstado = idEstado;
+        this.estadoNombre = estadoNombre;
     }
 
     public Integer getIdEstado() {
