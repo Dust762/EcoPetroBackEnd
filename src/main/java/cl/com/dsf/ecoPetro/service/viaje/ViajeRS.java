@@ -1,6 +1,6 @@
-package cl.com.dsf.ecoPetro.service.usuario;
+package cl.com.dsf.ecoPetro.service.viaje;
 
-import cl.com.dsf.ecoPetro.modelo.Usuario;
+import cl.com.dsf.ecoPetro.modelo.Viaje;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,33 +15,33 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/usuarios")
+@Path("/viajes")
 @Stateless
-public class UsuarioRS {
+public class ViajeRS {
     @Inject
-    UsuarioService us;
+    ViajeService vs;
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario> listarUsuarios() {
-        return us.mostrarUsuarios();
+    public List<Viaje> listarViajes() {
+        return vs.mostrarViajes();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id}")//hace referencia a /usuarios/{id}
-    public Usuario encontrarUsuarioPorId(@PathParam("id") int id) {
-        return us.encontrarUsuarioPorId(new Usuario(id));
+    @Path("{id}")//hace referencia a /viajes/{id}
+    public Viaje encontrarViajePorId(@PathParam("id") int id) {
+        return vs.encontrarViajePorId(new Viaje(id));
     }
     
     @POST
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response agregarUsuario(Usuario u) {
+    public Response crearViaje(Viaje c) {
         try {
-            us.agregarUsuario(u);
+            vs.crearViaje(c);
             
-            return Response.ok().entity(u).build();
+            return Response.ok().entity(c).build();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -52,12 +52,12 @@ public class UsuarioRS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response modificarUsuario(@PathParam("id") int id, Usuario uMod) {
+    public Response modificarViaje(@PathParam("id") int id, Viaje vMod) {
         try {
-            Usuario u = us.encontrarUsuarioPorId(new Usuario(id));
-            if (u != null) {
-                us.modificarUsuario(u);
-                return Response.ok().entity(uMod).build();
+            Viaje v = vs.encontrarViajePorId(new Viaje(id));
+            if (v != null) {
+                vs.modificarViaje(v);
+                return Response.ok().entity(vMod).build();
             }else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -70,9 +70,9 @@ public class UsuarioRS {
     
     @DELETE
     @Path("{id}")
-    public Response eliminarUsuarioPorId(@PathParam("id") int id) {
+    public Response eliminarViajePorId(@PathParam("id") int id) {
         try {
-            us.eliminarUsuario(new Usuario(id));
+            vs.eliminarViaje(new Viaje(id));
             return Response.ok().build();
         } catch (Exception e) {
             e.printStackTrace(System.out);

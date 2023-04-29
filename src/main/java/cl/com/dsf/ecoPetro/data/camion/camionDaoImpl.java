@@ -4,7 +4,6 @@ import cl.com.dsf.ecoPetro.modelo.Camion;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.*;
-import javax.persistence.PersistenceUnit;
 
 @Stateless
 public class camionDaoImpl implements camionDao{

@@ -5,10 +5,7 @@
 package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -52,8 +47,6 @@ public class Ltcombustible implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "RutaFotoCargas")
     private String rutaFotoCargas;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKIdCombustible")
-    private List<Chofer> choferList;
 
     public Ltcombustible() {
     }
@@ -90,15 +83,6 @@ public class Ltcombustible implements Serializable {
 
     public void setRutaFotoCargas(String rutaFotoCargas) {
         this.rutaFotoCargas = rutaFotoCargas;
-    }
-
-    @JsonbTransient
-    public List<Chofer> getChoferList() {
-        return choferList;
-    }
-
-    public void setChoferList(List<Chofer> choferList) {
-        this.choferList = choferList;
     }
 
     @Override

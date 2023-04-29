@@ -66,7 +66,7 @@ public class Camion implements Serializable {
     private List<Fallo> falloList;
     @JoinColumn(name = "FK_idEstadoCamion", referencedColumnName = "idEstadoCamion")
     @ManyToOne(optional = false)
-    private EstadoCamion fKidEstadoCamion;
+    private Estadocamion fKidEstadoCamion;
 
     public Camion() {
     }
@@ -132,11 +132,11 @@ public class Camion implements Serializable {
         this.falloList = falloList;
     }
 
-    public EstadoCamion getFKidEstadoCamion() {
+    public Estadocamion getFKidEstadoCamion() {
         return fKidEstadoCamion;
     }
 
-    public void setFKidEstadoCamion(EstadoCamion fKidEstadoCamion) {
+    public void setFKidEstadoCamion(Estadocamion fKidEstadoCamion) {
         this.fKidEstadoCamion = fKidEstadoCamion;
     }
 

@@ -1,6 +1,6 @@
-package cl.com.dsf.ecoPetro.service.usuario;
+package cl.com.dsf.ecoPetro.service.ltCombustible;
 
-import cl.com.dsf.ecoPetro.modelo.Usuario;
+import cl.com.dsf.ecoPetro.modelo.Ltcombustible;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,33 +15,33 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/usuarios")
+@Path("/ltcombustibles")
 @Stateless
-public class UsuarioRS {
+public class ltCombustibleServiceRS {
     @Inject
-    UsuarioService us;
+    private ltCombustibleService lcs;
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario> listarUsuarios() {
-        return us.mostrarUsuarios();
+    public List<Ltcombustible> listarLtCombustibles() {
+        return lcs.mostrarLtCombustibles();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id}")//hace referencia a /usuarios/{id}
-    public Usuario encontrarUsuarioPorId(@PathParam("id") int id) {
-        return us.encontrarUsuarioPorId(new Usuario(id));
+    @Path("{id}")//hace referencia a /ltcombustibles/{id}
+    public Ltcombustible encontrarLtCombustiblePorId(@PathParam("id") int id) {
+        return lcs.encontrarLtCombustiblePorId(new Ltcombustible(id));
     }
     
     @POST
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response agregarUsuario(Usuario u) {
+    public Response agregarLtCombustible(Ltcombustible lc) {
         try {
-            us.agregarUsuario(u);
+            lcs.agregarLtCombustible(lc);
             
-            return Response.ok().entity(u).build();
+            return Response.ok().entity(lc).build();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -52,12 +52,12 @@ public class UsuarioRS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response modificarUsuario(@PathParam("id") int id, Usuario uMod) {
+    public Response modificarLtCombustible(@PathParam("id") int id, Ltcombustible lcMod) {
         try {
-            Usuario u = us.encontrarUsuarioPorId(new Usuario(id));
-            if (u != null) {
-                us.modificarUsuario(u);
-                return Response.ok().entity(uMod).build();
+            Ltcombustible lc = lcs.encontrarLtCombustiblePorId(new Ltcombustible(id));
+            if (lc != null) {
+                lcs.modificarLtCombustible(lc);
+                return Response.ok().entity(lcMod).build();
             }else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -70,9 +70,9 @@ public class UsuarioRS {
     
     @DELETE
     @Path("{id}")
-    public Response eliminarUsuarioPorId(@PathParam("id") int id) {
+    public Response eliminarLtCombustiblePorId(@PathParam("id") int id) {
         try {
-            us.eliminarUsuario(new Usuario(id));
+            lcs.eliminarLtCombustible(new Ltcombustible(id));
             return Response.ok().build();
         } catch (Exception e) {
             e.printStackTrace(System.out);

@@ -1,6 +1,6 @@
-package cl.com.dsf.ecoPetro.service.usuario;
+package cl.com.dsf.ecoPetro.service.carga;
 
-import cl.com.dsf.ecoPetro.modelo.Usuario;
+import cl.com.dsf.ecoPetro.modelo.Carga;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,33 +15,33 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/usuarios")
+@Path("/cargas")
 @Stateless
-public class UsuarioRS {
+public class CargaRS {
     @Inject
-    UsuarioService us;
+    CargaService cs;
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario> listarUsuarios() {
-        return us.mostrarUsuarios();
+    public List<Carga> listarCargas() {
+        return cs.mostrarCargas();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id}")//hace referencia a /usuarios/{id}
-    public Usuario encontrarUsuarioPorId(@PathParam("id") int id) {
-        return us.encontrarUsuarioPorId(new Usuario(id));
+    @Path("{id}")//hace referencia a /cargas/{id}
+    public Carga encontrarCargaPorId(@PathParam("id") int id) {
+        return cs.encontrarCargaPorId(new Carga(id));
     }
     
     @POST
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response agregarUsuario(Usuario u) {
+    public Response crearCarga(Carga c) {
         try {
-            us.agregarUsuario(u);
+            cs.crearCarga(c);
             
-            return Response.ok().entity(u).build();
+            return Response.ok().entity(c).build();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -52,12 +52,12 @@ public class UsuarioRS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response modificarUsuario(@PathParam("id") int id, Usuario uMod) {
+    public Response modificarCarga(@PathParam("id") int id, Carga cMod) {
         try {
-            Usuario u = us.encontrarUsuarioPorId(new Usuario(id));
-            if (u != null) {
-                us.modificarUsuario(u);
-                return Response.ok().entity(uMod).build();
+            Carga c = cs.encontrarCargaPorId(new Carga(id));
+            if (c != null) {
+                cs.actualizarCarga(c);
+                return Response.ok().entity(cMod).build();
             }else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -70,9 +70,9 @@ public class UsuarioRS {
     
     @DELETE
     @Path("{id}")
-    public Response eliminarUsuarioPorId(@PathParam("id") int id) {
+    public Response eliminarCargaPorId(@PathParam("id") int id) {
         try {
-            us.eliminarUsuario(new Usuario(id));
+            cs.eliminarCarga(new Carga(id));
             return Response.ok().build();
         } catch (Exception e) {
             e.printStackTrace(System.out);

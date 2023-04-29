@@ -1,7 +1,7 @@
 package cl.com.dsf.ecoPetro.service.estadoCamion;
 
 import cl.com.dsf.ecoPetro.modelo.Estado;
-import cl.com.dsf.ecoPetro.modelo.EstadoCamion;
+import cl.com.dsf.ecoPetro.modelo.Estadocamion;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -24,20 +24,20 @@ public class EstadoCamionServiceRs {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<EstadoCamion> listarEstados() {
+    public List<Estadocamion> listarEstados() {
         return ecs.mostrarEstadoCamiones();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{id}")//hace referencia a /estadosCamiones/{id}
-    public EstadoCamion encontrarEstadoPorId(@PathParam("id") int id) {
-        return ecs.encontrarEstadoPorId(new EstadoCamion(id));
+    public Estadocamion encontrarEstadoPorId(@PathParam("id") int id) {
+        return ecs.encontrarEstadoPorId(new Estadocamion(id));
     }
     @POST
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response agregarEstadoCamion(EstadoCamion ec) {
+    public Response agregarEstadoCamion(Estadocamion ec) {
         try {
             ecs.crearEstadoCamion(ec);
             return Response.ok().entity(ec).build();
@@ -52,7 +52,7 @@ public class EstadoCamionServiceRs {
     @Path("{id}")
     public Response modificarEstadoCamion(@PathParam("id") int id, Estado eMod) {
         try {
-            EstadoCamion ec = ecs.encontrarEstadoPorId(new EstadoCamion(id));
+            Estadocamion ec = ecs.encontrarEstadoPorId(new Estadocamion(id));
             if (ec != null) {
                 ecs.modificarEstadoCamion(ec);
                 return Response.ok().entity(eMod).build();
@@ -70,7 +70,7 @@ public class EstadoCamionServiceRs {
     @Path("{id}")
     public Response eliminarEstadoCamionPorId(@PathParam("id") int id) {
         try {
-            ecs.eliminarEstadoCamion(new EstadoCamion(id));
+            ecs.eliminarEstadoCamion(new Estadocamion(id));
             return Response.ok().build();
         } catch (Exception e) {
             e.printStackTrace(System.out);

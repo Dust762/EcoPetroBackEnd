@@ -2,9 +2,10 @@ package cl.com.dsf.ecoPetro.data.usuario;
 
 import cl.com.dsf.ecoPetro.modelo.Usuario;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+@Stateless
 public class usuarioDaoImpl implements usuarioDao {
     @PersistenceContext(unitName = "ecoPetroPU")
     EntityManager em;

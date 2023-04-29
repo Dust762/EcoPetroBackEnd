@@ -1,16 +1,16 @@
 package cl.com.dsf.ecoPetro.data.estadoCamion;
 
-import cl.com.dsf.ecoPetro.modelo.EstadoCamion;
+import cl.com.dsf.ecoPetro.modelo.Estadocamion;
 import java.util.List;
 
 public interface estadoCamionDao {
-    public List<EstadoCamion> mostrarEstadoCamiones();
+    public List<Estadocamion> mostrarEstadoCamiones();
     
-    public EstadoCamion encontrarEstadoCamionPorId(EstadoCamion ec);
+    public Estadocamion encontrarEstadoCamionPorId(Estadocamion ec);
     
-    public void agregarEstadoCamion(EstadoCamion ec);
+    public void agregarEstadoCamion(Estadocamion ec);
     
-    public void modificarEstadoCamion(EstadoCamion ec);
+    public void modificarEstadoCamion(Estadocamion ec);
     
-    public void eliminarEstadoCamion(EstadoCamion ec);
+    public void eliminarEstadoCamion(Estadocamion ec);
 }

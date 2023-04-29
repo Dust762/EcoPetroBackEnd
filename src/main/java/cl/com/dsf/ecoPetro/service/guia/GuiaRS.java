@@ -1,6 +1,6 @@
-package cl.com.dsf.ecoPetro.service.usuario;
+package cl.com.dsf.ecoPetro.service.guia;
 
-import cl.com.dsf.ecoPetro.modelo.Usuario;
+import cl.com.dsf.ecoPetro.modelo.Guia;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,33 +15,33 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/usuarios")
+@Path("/guias")
 @Stateless
-public class UsuarioRS {
+public class GuiaRS {
     @Inject
-    UsuarioService us;
+    GuiaService gs;
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario> listarUsuarios() {
-        return us.mostrarUsuarios();
+    public List<Guia> listarGuias() {
+        return gs.mostrarGuias();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id}")//hace referencia a /usuarios/{id}
-    public Usuario encontrarUsuarioPorId(@PathParam("id") int id) {
-        return us.encontrarUsuarioPorId(new Usuario(id));
+    @Path("{id}")//hace referencia a /guias/{id}
+    public Guia encontrarGuiaPorNroGuia(@PathParam("id") int id) {
+        return gs.encontrarGuiaPorNroGuia(new Guia(id));
     }
     
     @POST
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response agregarUsuario(Usuario u) {
+    public Response agregarUsuario(Guia g) {
         try {
-            us.agregarUsuario(u);
+            gs.agregarGuia(g);
             
-            return Response.ok().entity(u).build();
+            return Response.ok().entity(g).build();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -52,12 +52,12 @@ public class UsuarioRS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response modificarUsuario(@PathParam("id") int id, Usuario uMod) {
+    public Response modificarGuia(@PathParam("id") int id, Guia gMod) {
         try {
-            Usuario u = us.encontrarUsuarioPorId(new Usuario(id));
-            if (u != null) {
-                us.modificarUsuario(u);
-                return Response.ok().entity(uMod).build();
+            Guia g = gs.encontrarGuiaPorNroGuia(new Guia(id));
+            if (g != null) {
+                gs.modificarGuia(g);
+                return Response.ok().entity(gMod).build();
             }else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -70,9 +70,9 @@ public class UsuarioRS {
     
     @DELETE
     @Path("{id}")
-    public Response eliminarUsuarioPorId(@PathParam("id") int id) {
+    public Response eliminarGuiaPorNroGuia(@PathParam("id") int id) {
         try {
-            us.eliminarUsuario(new Usuario(id));
+            gs.eliminarGuia(new Guia(id));
             return Response.ok().build();
         } catch (Exception e) {
             e.printStackTrace(System.out);

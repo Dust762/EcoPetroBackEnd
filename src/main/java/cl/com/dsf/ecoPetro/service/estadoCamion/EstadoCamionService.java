@@ -1,17 +1,17 @@
 package cl.com.dsf.ecoPetro.service.estadoCamion;
 
-import cl.com.dsf.ecoPetro.modelo.EstadoCamion;
+import cl.com.dsf.ecoPetro.modelo.Estadocamion;
 import java.util.List;
 import javax.ejb.Local;
 @Local
 public interface EstadoCamionService {
-    public List<EstadoCamion> mostrarEstadoCamiones();
+    public List<Estadocamion> mostrarEstadoCamiones();
 
-    public EstadoCamion encontrarEstadoPorId(EstadoCamion ec);
+    public Estadocamion encontrarEstadoPorId(Estadocamion ec);
 
-    public void crearEstadoCamion(EstadoCamion ec);
+    public void crearEstadoCamion(Estadocamion ec);
 
-    public void modificarEstadoCamion(EstadoCamion ec);
+    public void modificarEstadoCamion(Estadocamion ec);
 
-    public void eliminarEstadoCamion(EstadoCamion ec);
+    public void eliminarEstadoCamion(Estadocamion ec);
 }
