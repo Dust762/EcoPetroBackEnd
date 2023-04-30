@@ -3,7 +3,9 @@ package cl.com.dsf.ecoPetro.data.guia;
 import cl.com.dsf.ecoPetro.modelo.Guia;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,9 +47,12 @@ public class guiaDaoImpl implements guiaDao {
 
     @Override
     public List<Guia> listarGuiasPorFecha(String mes) {
-        String strInicial = "2023/"+mes+"/1";
-        String strFinal = "2023/"+mes+"/31";
         Date d1 = null,d2 = null;
+        Calendar c = new GregorianCalendar();
+        String year = String.valueOf(c.get(Calendar.YEAR)); 
+        String strInicial = year+"/"+mes+"/1";
+        String strFinal = year+"/"+mes+"/31";
+        
         try {
             d1 = new SimpleDateFormat("yyyy/MM/dd").parse(strInicial);
             d2 = new SimpleDateFormat("yyyy/MM/dd").parse(strFinal);
