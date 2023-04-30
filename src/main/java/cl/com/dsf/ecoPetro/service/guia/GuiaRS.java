@@ -86,4 +86,11 @@ public class GuiaRS {
     public List<Guia> listarGuiasPorFechas(@PathParam("mes") String mes) {
         return gs.listarGuiasPorFecha(mes);
     }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("consumoTotal/{mes}")
+    public String totalConsumoMensual(@PathParam("mes") String mes) {
+        return gs.totalConsumoMensual(mes);
+    }
 }

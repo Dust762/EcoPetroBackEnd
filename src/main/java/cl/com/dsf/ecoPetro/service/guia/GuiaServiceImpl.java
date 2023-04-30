@@ -50,4 +50,9 @@ public class GuiaServiceImpl implements GuiaService, GuiaServiceRemote, GuiaWs {
     public List<Guia> listarGuiasPorFecha(String mes){
         return gd.listarGuiasPorFecha(mes);
     }
+
+    @Override
+    public String totalConsumoMensual(String mes) {
+        return gd.totalConsumoMensual(mes);
+    }
 }

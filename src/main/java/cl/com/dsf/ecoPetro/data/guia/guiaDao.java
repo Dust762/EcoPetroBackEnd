@@ -15,4 +15,6 @@ public interface guiaDao {
     public void eliminarGuia(Guia g);
     
     public List<Guia> listarGuiasPorFecha(String mes);
+    
+    public String totalConsumoMensual(String mes);
 }

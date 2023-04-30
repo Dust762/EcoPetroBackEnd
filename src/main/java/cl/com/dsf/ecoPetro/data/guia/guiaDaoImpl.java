@@ -58,5 +58,17 @@ public class guiaDaoImpl implements guiaDao {
         return em.createNamedQuery("Guia.findByMonthSelected").setParameter("fechaInicial", d1 ,TemporalType.DATE)
                 .setParameter("fechaFinal", d2, TemporalType.DATE).getResultList();
     }
+
+    @Override
+    public String totalConsumoMensual(String mes) {
+        int totalConsumo = 0;
+        List<Guia> temp = listarGuiasPorFecha(mes);
+        for (int i = 0; i < temp.size(); i++) {
+            totalConsumo += temp.get(i).getLtrConsumidos();
+        }
+        String resumen = "El consumo de combustubles del mes: " + mes +" fue:" + totalConsumo;
+        
+        return resumen;
+    }
     
 }
