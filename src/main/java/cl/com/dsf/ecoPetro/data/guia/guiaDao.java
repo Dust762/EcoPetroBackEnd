@@ -13,4 +13,6 @@ public interface guiaDao {
     public void modificarGuia(Guia g);
     
     public void eliminarGuia(Guia g);
+    
+    public List<Guia> listarGuiasPorFecha(String mes);
 }

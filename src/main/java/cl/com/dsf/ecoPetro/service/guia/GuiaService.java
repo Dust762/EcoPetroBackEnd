@@ -14,4 +14,6 @@ public interface GuiaService {
     public void modificarGuia(Guia g);
     
     public void eliminarGuia(Guia g);
+    
+    public List<Guia> listarGuiasPorFecha(String mes);
 }

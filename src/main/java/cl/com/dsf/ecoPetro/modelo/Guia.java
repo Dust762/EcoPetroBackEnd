@@ -5,6 +5,7 @@
 package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,7 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Guia.findAll", query = "SELECT g FROM Guia g"),
     @NamedQuery(name = "Guia.findByNroGuia", query = "SELECT g FROM Guia g WHERE g.nroGuia = :nroGuia"),
     @NamedQuery(name = "Guia.findByLtrConsumidos", query = "SELECT g FROM Guia g WHERE g.ltrConsumidos = :ltrConsumidos"),
-    @NamedQuery(name = "Guia.findByFecha", query = "SELECT g FROM Guia g WHERE g.fecha = :fecha")})
+    @NamedQuery(name = "Guia.findByFecha", query = "SELECT g FROM Guia g WHERE g.fecha = :fecha"),
+    @NamedQuery(name = "Guia.findByMonthSelected", query = "SELECT g FROM Guia g WHERE g.fecha BETWEEN :fechaInicial AND :fechaFinal")
+    })
 public class Guia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,9 +48,9 @@ public class Guia implements Serializable {
     private int ltrConsumidos;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "Fecha")
-    private String fecha;
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
     @JoinColumn(name = "FK_idViajes", referencedColumnName = "idViajes")
     @ManyToOne(optional = false)
     private Viaje fKidViajes;
@@ -64,7 +68,7 @@ public class Guia implements Serializable {
         this.nroGuia = nroGuia;
     }
 
-    public Guia(Integer nroGuia, int ltrConsumidos, String fecha) {
+    public Guia(Integer nroGuia, int ltrConsumidos, Date fecha) {
         this.nroGuia = nroGuia;
         this.ltrConsumidos = ltrConsumidos;
         this.fecha = fecha;
@@ -86,11 +90,11 @@ public class Guia implements Serializable {
         this.ltrConsumidos = ltrConsumidos;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

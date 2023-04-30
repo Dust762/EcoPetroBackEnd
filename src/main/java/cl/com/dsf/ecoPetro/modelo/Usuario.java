@@ -4,7 +4,10 @@
  */
 package cl.com.dsf.ecoPetro.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -127,7 +130,7 @@ public class Usuario implements Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    @JsonbTransient
     public Chofer getChofer() {
         return chofer;
     }
@@ -135,7 +138,7 @@ public class Usuario implements Serializable {
     public void setChofer(Chofer chofer) {
         this.chofer = chofer;
     }
-
+    @JsonbTransient
     public EstadoUsuario getEstadoUsuario() {
         return estadoUsuario;
     }
@@ -143,7 +146,7 @@ public class Usuario implements Serializable {
     public void setEstadoUsuario(EstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }
-
+    @JsonbTransient
     public TipoUsuario getFKTipoUsuario() {
         return fKTipoUsuario;
     }

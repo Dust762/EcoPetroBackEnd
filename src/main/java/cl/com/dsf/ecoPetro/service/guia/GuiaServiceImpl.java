@@ -46,4 +46,8 @@ public class GuiaServiceImpl implements GuiaService, GuiaServiceRemote, GuiaWs {
         gd.eliminarGuia(g);
     }
     
+    @Override
+    public List<Guia> listarGuiasPorFecha(String mes){
+        return gd.listarGuiasPorFecha(mes);
+    }
 }

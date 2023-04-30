@@ -79,4 +79,11 @@ public class GuiaRS {
             return Response.status(404).build();
         }
     }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("mes/{mes}")
+    public List<Guia> listarGuiasPorFechas(@PathParam("mes") String mes) {
+        return gs.listarGuiasPorFecha(mes);
+    }
 }
