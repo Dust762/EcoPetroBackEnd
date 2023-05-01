@@ -4,9 +4,9 @@
  */
 package cl.com.dsf.ecoPetro.modelo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByNombreUsuario", query = "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
-    @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")})
+    @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
+    @NamedQuery(name = "Usuario.findByFechaCreacion", query = "SELECT u FROM Usuario u WHERE u.fechaCreacion = :fechaCreacion")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,6 +70,12 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Telefono")
     private String telefono;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechaCreacion")
+    @Temporal(TemporalType.DATE)
+    @JsonbDateFormat(value = "yyyy/MM/dd")
+    private Date fechaCreacion;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Chofer chofer;
     @JoinColumn(name = "EstadoUsuario", referencedColumnName = "idEstadoUsuarios")
@@ -83,12 +92,13 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nombreUsuario, String password, String apellido, String telefono) {
+    public Usuario(Integer idUsuario, String nombreUsuario, String password, String apellido, String telefono, Date fechaCreacion) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.password = password;
         this.apellido = apellido;
         this.telefono = telefono;
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Integer getIdUsuario() {
@@ -129,6 +139,14 @@ public class Usuario implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
     @JsonbTransient
     public Chofer getChofer() {

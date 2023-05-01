@@ -5,23 +5,25 @@
 package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ltcombustible.findAll", query = "SELECT l FROM Ltcombustible l"),
     @NamedQuery(name = "Ltcombustible.findByIdCombustible", query = "SELECT l FROM Ltcombustible l WHERE l.idCombustible = :idCombustible"),
     @NamedQuery(name = "Ltcombustible.findByLitrosTotales", query = "SELECT l FROM Ltcombustible l WHERE l.litrosTotales = :litrosTotales"),
-    @NamedQuery(name = "Ltcombustible.findByRutaFotoCargas", query = "SELECT l FROM Ltcombustible l WHERE l.rutaFotoCargas = :rutaFotoCargas")})
+    @NamedQuery(name = "Ltcombustible.findByRutaFotoCargas", query = "SELECT l FROM Ltcombustible l WHERE l.rutaFotoCargas = :rutaFotoCargas"),
+    @NamedQuery(name = "Ltcombustible.findByFechaCarga", query = "SELECT l FROM Ltcombustible l WHERE l.fechaCarga = :fechaCarga")})
 public class Ltcombustible implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +55,15 @@ public class Ltcombustible implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "RutaFotoCargas")
     private String rutaFotoCargas;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKIdCombustible")
-    private List<Chofer> choferList;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechaCarga")
+    @Temporal(TemporalType.DATE)
+    @JsonbDateFormat(value = "yyyy/MM/dd")
+    private Date fechaCarga;
+    @JoinColumn(name = "FK_idChofer", referencedColumnName = "Id_Usuario")
+    @ManyToOne(optional = false)
+    private Chofer fKidChofer;
 
     public Ltcombustible() {
     }
@@ -62,10 +72,11 @@ public class Ltcombustible implements Serializable {
         this.idCombustible = idCombustible;
     }
 
-    public Ltcombustible(Integer idCombustible, int litrosTotales, String rutaFotoCargas) {
+    public Ltcombustible(Integer idCombustible, int litrosTotales, String rutaFotoCargas, Date fechaCarga) {
         this.idCombustible = idCombustible;
         this.litrosTotales = litrosTotales;
         this.rutaFotoCargas = rutaFotoCargas;
+        this.fechaCarga = fechaCarga;
     }
 
     public Integer getIdCombustible() {
@@ -92,13 +103,20 @@ public class Ltcombustible implements Serializable {
         this.rutaFotoCargas = rutaFotoCargas;
     }
 
-    @JsonbTransient
-    public List<Chofer> getChoferList() {
-        return choferList;
+    public Date getFechaCarga() {
+        return fechaCarga;
     }
 
-    public void setChoferList(List<Chofer> choferList) {
-        this.choferList = choferList;
+    public void setFechaCarga(Date fechaCarga) {
+        this.fechaCarga = fechaCarga;
+    }
+    
+    public Chofer getFKidChofer() {
+        return fKidChofer;
+    }
+
+    public void setFKidChofer(Chofer fKidChofer) {
+        this.fKidChofer = fKidChofer;
     }
 
     @Override

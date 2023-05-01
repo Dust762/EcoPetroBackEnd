@@ -5,6 +5,8 @@
 package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Fallo.findAll", query = "SELECT f FROM Fallo f"),
     @NamedQuery(name = "Fallo.findByIdFallos", query = "SELECT f FROM Fallo f WHERE f.idFallos = :idFallos"),
+    @NamedQuery(name = "Fallo.findByFechaFallo", query = "SELECT f FROM Fallo f WHERE f.fechaFallo = :fechaFallo"),
     @NamedQuery(name = "Fallo.findByDescripcion", query = "SELECT f FROM Fallo f WHERE f.descripcion = :descripcion")})
 public class Fallo implements Serializable {
 
@@ -38,6 +44,12 @@ public class Fallo implements Serializable {
     @Basic(optional = false)
     @Column(name = "idFallos")
     private Integer idFallos;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechaFallo")
+    @Temporal(TemporalType.DATE)
+    @JsonbDateFormat(value = "yyyy/MM/dd")
+    private Date fechaFallo;
     @Size(max = 100)
     @Column(name = "Descripcion")
     private String descripcion;
@@ -55,12 +67,25 @@ public class Fallo implements Serializable {
         this.idFallos = idFallos;
     }
 
+    public Fallo(Integer idFallos, Date fechaFallo) {
+        this.idFallos = idFallos;
+        this.fechaFallo = fechaFallo;
+    }
+
     public Integer getIdFallos() {
         return idFallos;
     }
 
     public void setIdFallos(Integer idFallos) {
         this.idFallos = idFallos;
+    }
+
+    public Date getFechaFallo() {
+        return fechaFallo;
+    }
+
+    public void setFechaFallo(Date fechaFallo) {
+        this.fechaFallo = fechaFallo;
     }
 
     public String getDescripcion() {

@@ -12,7 +12,7 @@ import javax.inject.Inject;
 @DeclareRoles({"ROLE_ADMIN","ROLE_USER"})
 @RolesAllowed({"ROLE_ADMIN","ROLE_USER"})
 public class CamionServiceImpl implements CamionService, CamionServiceRemote, CamionServiceWs{
-
+    
     @Inject
     private camionDao cD;
 

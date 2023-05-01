@@ -114,7 +114,7 @@ public class Camion implements Serializable {
         this.capacidad = capacidad;
     }
 
-    @JsonbTransient
+    
     public List<Chofer> getChoferList() {
         return choferList;
     }
@@ -131,7 +131,7 @@ public class Camion implements Serializable {
     public void setFalloList(List<Fallo> falloList) {
         this.falloList = falloList;
     }
-
+    @JsonbTransient
     public Estadocamion getFKidEstadoCamion() {
         return fKidEstadoCamion;
     }

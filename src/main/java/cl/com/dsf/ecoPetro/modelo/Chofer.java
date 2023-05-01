@@ -41,9 +41,8 @@ public class Chofer implements Serializable {
     @NotNull
     @Column(name = "Id_Usuario")
     private Integer idUsuario;
-    @JoinColumn(name = "FK_IdCombustible", referencedColumnName = "idCombustible")
-    @ManyToOne(optional = false)
-    private Ltcombustible fKIdCombustible;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidChofer")
+    private List<Ltcombustible> ltcombustibleList;
     @JoinColumn(name = "Id_Usuario", referencedColumnName = "idUsuario", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
@@ -68,12 +67,13 @@ public class Chofer implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Ltcombustible getFKIdCombustible() {
-        return fKIdCombustible;
+    @JsonbTransient
+    public List<Ltcombustible> getLtcombustibleList() {
+        return ltcombustibleList;
     }
 
-    public void setFKIdCombustible(Ltcombustible fKIdCombustible) {
-        this.fKIdCombustible = fKIdCombustible;
+    public void setLtcombustibleList(List<Ltcombustible> ltcombustibleList) {
+        this.ltcombustibleList = ltcombustibleList;
     }
 
     public Usuario getUsuario() {
@@ -83,7 +83,7 @@ public class Chofer implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    @JsonbTransient
     public Camion getFKidCamion() {
         return fKidCamion;
     }

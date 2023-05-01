@@ -6,6 +6,7 @@ package cl.com.dsf.ecoPetro.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,6 +51,7 @@ public class Guia implements Serializable {
     @NotNull
     @Column(name = "Fecha")
     @Temporal(TemporalType.DATE)
+    @JsonbDateFormat(value = "yyyy/MM/dd")
     private Date fecha;
     @JoinColumn(name = "FK_idViajes", referencedColumnName = "idViajes")
     @ManyToOne(optional = false)
