@@ -1,7 +1,6 @@
+package cl.com.dsf.ecoPetro.service.fotoUsuario;
 
-package cl.com.dsf.ecoPetro.service.camion;
-
-import cl.com.dsf.ecoPetro.modelo.Camion;
+import cl.com.dsf.ecoPetro.modelo.FotoUsuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,33 +14,33 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-@Path("/camiones")
+//Se debe cambiar los metodos de acceso, para el uso de media (muulti_form_data)
+@Path("/fotousuarios")
 @Stateless
-public class CamionServiceRS {
+public class FotoUsuarioServiceRS {
     @Inject
-    private CamionService cs;
+    private FotoUsuarioService fus;
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Camion> listarCamiones() {
-        return cs.listarCamiones();
+    public List<FotoUsuario> listarFotoUsuarios() {
+        return fus.mostrarFotoUsuarios();
     }
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id}")//hace referencia a /camiones/{id}
-    public Camion encontrarCamionPorId(@PathParam("id") int id) {
-        return cs.encontrarCamionPorId(new Camion(id));
+    @Path("{id}")//hace referencia a /fotousuarios/{id}
+    public FotoUsuario encontrarFotoUsuarioPorId(@PathParam("id") int id) {
+        return fus.encontrarFotoUsuarioPorId(new FotoUsuario(id));
     }
     
     @POST
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response agregarCamion(Camion c) {
+    public Response agregarFotoUsuario(FotoUsuario fu) {
         try {
-            cs.registrarCamion(c);
-            
-            return Response.ok().entity(c).build();
+            fus.agregarFotoUsuario(fu);
+            return Response.ok().entity(fu).build();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -52,12 +51,12 @@ public class CamionServiceRS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response modificarCamion(@PathParam("id") int id, Camion cMod) {
+    public Response actualizarFotoUsuario(@PathParam("id") int id, FotoUsuario fuMod) {
         try {
-            Camion c = cs.encontrarCamionPorId(new Camion(id));
-            if (c != null) {
-                cs.actualizarCamion(c);
-                return Response.ok().entity(cMod).build();
+            FotoUsuario fu = fus.encontrarFotoUsuarioPorId(new FotoUsuario(id));
+            if (fu != null) {
+                fus.actualizarFotoUsuario(fu);
+                return Response.ok().entity(fuMod).build();
             }else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -70,9 +69,9 @@ public class CamionServiceRS {
     
     @DELETE
     @Path("{id}")
-    public Response eliminarCamionPorId(@PathParam("id") int id) {
+    public Response eliminarFotoUsuarioPorId(@PathParam("id") int id) {
         try {
-            cs.eliminarCamion(new Camion(id));
+            fus.eliminarFotoUsuario(new FotoUsuario(id));
             return Response.ok().build();
         } catch (Exception e) {
             e.printStackTrace(System.out);

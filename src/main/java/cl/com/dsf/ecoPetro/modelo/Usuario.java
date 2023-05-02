@@ -4,8 +4,10 @@
  */
 package cl.com.dsf.ecoPetro.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
@@ -19,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +29,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -76,6 +80,8 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     @JsonbDateFormat(value = "yyyy/MM/dd")
     private Date fechaCreacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidUsuario")
+    private List<FotoUsuario> fotoUsuarioList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Chofer chofer;
     @JoinColumn(name = "EstadoUsuario", referencedColumnName = "idEstadoUsuarios")
@@ -148,6 +154,16 @@ public class Usuario implements Serializable {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
+
+    @JsonbTransient
+    public List<FotoUsuario> getFotoUsuarioList() {
+        return fotoUsuarioList;
+    }
+
+    public void setFotoUsuarioList(List<FotoUsuario> fotoUsuarioList) {
+        this.fotoUsuarioList = fotoUsuarioList;
+    }
+
     @JsonbTransient
     public Chofer getChofer() {
         return chofer;

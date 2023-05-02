@@ -41,8 +41,6 @@ public class Chofer implements Serializable {
     @NotNull
     @Column(name = "Id_Usuario")
     private Integer idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidChofer")
-    private List<Ltcombustible> ltcombustibleList;
     @JoinColumn(name = "Id_Usuario", referencedColumnName = "idUsuario", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
@@ -51,6 +49,8 @@ public class Chofer implements Serializable {
     private Camion fKidCamion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKIdChofer")
     private List<Guia> guiaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidChofer")
+    private List<Ltcombustible> ltcombustibleList;
 
     public Chofer() {
     }
@@ -65,15 +65,6 @@ public class Chofer implements Serializable {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    @JsonbTransient
-    public List<Ltcombustible> getLtcombustibleList() {
-        return ltcombustibleList;
-    }
-
-    public void setLtcombustibleList(List<Ltcombustible> ltcombustibleList) {
-        this.ltcombustibleList = ltcombustibleList;
     }
 
     public Usuario getUsuario() {
@@ -99,6 +90,15 @@ public class Chofer implements Serializable {
 
     public void setGuiaList(List<Guia> guiaList) {
         this.guiaList = guiaList;
+    }
+
+    @JsonbTransient
+    public List<Ltcombustible> getLtcombustibleList() {
+        return ltcombustibleList;
+    }
+
+    public void setLtcombustibleList(List<Ltcombustible> ltcombustibleList) {
+        this.ltcombustibleList = ltcombustibleList;
     }
 
     @Override

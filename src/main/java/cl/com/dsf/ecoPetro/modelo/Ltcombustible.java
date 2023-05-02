@@ -7,7 +7,6 @@ package cl.com.dsf.ecoPetro.modelo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbDateFormat;
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -110,7 +109,7 @@ public class Ltcombustible implements Serializable {
     public void setFechaCarga(Date fechaCarga) {
         this.fechaCarga = fechaCarga;
     }
-    
+
     public Chofer getFKidChofer() {
         return fKidChofer;
     }
