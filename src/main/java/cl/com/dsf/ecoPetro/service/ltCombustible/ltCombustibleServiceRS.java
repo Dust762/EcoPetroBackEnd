@@ -23,7 +23,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 @Path("/ltcombustibles")
 @Stateless
@@ -58,46 +57,38 @@ public class ltCombustibleServiceRS {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    /*
+    final static String PHOTO_DIRECTORY = "D:\\fotosEcoPetro\\fotosCombustibles\\";
+
     //EXPERIMENTAL
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("fotoCombustible/{id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response agregarLtCombustible(@DefaultValue("true") @FormDataParam("enabled") boolean enabled,
-            @FormDataParam("foto") InputStream uploadedInputStream,
-            @FormDataParam("foto") FormDataContentDisposition datoArchivo, @PathParam("id") int id) {
-       
-        
-        
-        String ubicacion = "D://fotoCombustible/" + datoArchivo.getFileName();
+            @FormDataParam("file") InputStream uploadedInputStream,
+            @FormDataParam("file") FormDataContentDisposition datoArchivo, @PathParam("id") int id) throws IOException {
+        String ubicacion = PHOTO_DIRECTORY + datoArchivo.getFileName();
         File objFile = new File(ubicacion);
         if (objFile.exists()) {
-
             objFile.delete();
 
         }
         saveToFile(uploadedInputStream, ubicacion);
+
+        String output = "File uploaded via Jersey based RESTFul Webservice to: " + ubicacion;
         Ltcombustible lc = lcs.encontrarLtCombustiblePorId(new Ltcombustible(id));
         lc.setRutaFotoCargas(ubicacion);
+        lcs.modificarLtCombustible(lc);
 
-        try {
-            lcs.modificarLtCombustible(lc);
-            return Response.ok().entity(lc).build();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+        return Response.status(200).entity(output).build();
     }
-    
-    private void saveToFile(InputStream uploadedInputStream,
-            String uploadedFileLocation) {
 
+    private void saveToFile(InputStream uploadedInputStream, String ubicacion) {
         try {
             OutputStream out = null;
             int read = 0;
             byte[] bytes = new byte[1024];
 
-            out = new FileOutputStream(new File(uploadedFileLocation));
+            out = new FileOutputStream(new File(ubicacion));
             while ((read = uploadedInputStream.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
@@ -107,10 +98,8 @@ public class ltCombustibleServiceRS {
 
             e.printStackTrace();
         }
-
-        
     }
-    */
+
     @PUT
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -127,7 +116,9 @@ public class ltCombustibleServiceRS {
 
         } catch (Exception e) {
             e.printStackTrace(System.out);
+            System.out.println("Entro en error modificar");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+
         }
     }
 
@@ -142,4 +133,5 @@ public class ltCombustibleServiceRS {
             return Response.status(404).build();
         }
     }
+
 }

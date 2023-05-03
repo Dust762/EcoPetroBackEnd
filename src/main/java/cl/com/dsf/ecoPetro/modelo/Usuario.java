@@ -4,7 +4,6 @@
  */
 package cl.com.dsf.ecoPetro.modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
     @NamedQuery(name = "Usuario.findByNombreUsuario", query = "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario"),
-    @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
+    @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
+    @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo"),
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
     @NamedQuery(name = "Usuario.findByFechaCreacion", query = "SELECT u FROM Usuario u WHERE u.fechaCreacion = :fechaCreacion")})
 public class Usuario implements Serializable {
@@ -62,13 +62,18 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "Apellido")
+    private String apellido;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "Apellido")
-    private String apellido;
+    @Size(min = 1, max = 65)
+    @Column(name = "correo")
+    private String correo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -98,11 +103,12 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, String nombreUsuario, String password, String apellido, String telefono, Date fechaCreacion) {
+    public Usuario(Integer idUsuario, String nombreUsuario, String apellido, String password, String correo, String telefono, Date fechaCreacion) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
-        this.password = password;
         this.apellido = apellido;
+        this.password = password;
+        this.correo = correo;
         this.telefono = telefono;
         this.fechaCreacion = fechaCreacion;
     }
@@ -123,6 +129,14 @@ public class Usuario implements Serializable {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -131,12 +145,12 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getTelefono() {
