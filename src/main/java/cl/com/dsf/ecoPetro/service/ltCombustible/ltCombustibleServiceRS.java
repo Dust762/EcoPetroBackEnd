@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -76,7 +77,7 @@ public class ltCombustibleServiceRS {
 
         String output = "File uploaded via Jersey based RESTFul Webservice to: " + ubicacion;
         Ltcombustible lc = lcs.encontrarLtCombustiblePorId(new Ltcombustible(id));
-        lc.setRutaFotoCargas(ubicacion);
+        lc.setRutaFotoCargas(objFile.getName());
         lcs.modificarLtCombustible(lc);
 
         return Response.status(200).entity(output).build();
@@ -99,7 +100,28 @@ public class ltCombustibleServiceRS {
             e.printStackTrace();
         }
     }
-
+    
+    @GET
+    @Path("fotoCombustible/{ubicacion}")
+    @Produces({"image/png", "image/jpeg"})
+    public Response retornarFotoCombustible(@PathParam("ubicacion") String ubicacion){
+        
+        System.out.println(ubicacion);
+        File foto = null;
+        try {
+           foto = new File(PHOTO_DIRECTORY + ubicacion);
+        } catch (Exception e) {
+            System.out.println("No existe el archivo");
+        }
+        
+        if (foto.exists()) {
+            ResponseBuilder r = Response.ok((Object) foto); 
+            r.header("Content-Disposition","attachment; filename="+foto.getName());
+            return r.build();
+        }
+        System.out.println("No se encontro");
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
     @PUT
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
