@@ -1,6 +1,7 @@
 package cl.com.dsf.ecoPetro.service.guia;
 
 import cl.com.dsf.ecoPetro.data.guia.guiaDao;
+import cl.com.dsf.ecoPetro.modelo.Dia;
 import cl.com.dsf.ecoPetro.modelo.Guia;
 import java.util.List;
 import javax.annotation.Resource;
@@ -54,5 +55,10 @@ public class GuiaServiceImpl implements GuiaService, GuiaServiceRemote, GuiaWs {
     @Override
     public String totalConsumoMensual(String mes) {
         return gd.totalConsumoMensual(mes);
+    }
+
+    @Override
+    public List<Dia> listarConsumoSemana(String mes, String semana) {
+        return gd.listarConsumoSemana(mes, semana);
     }
 }

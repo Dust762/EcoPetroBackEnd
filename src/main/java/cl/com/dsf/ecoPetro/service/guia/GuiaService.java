@@ -1,5 +1,6 @@
 package cl.com.dsf.ecoPetro.service.guia;
 
+import cl.com.dsf.ecoPetro.modelo.Dia;
 import cl.com.dsf.ecoPetro.modelo.Guia;
 import java.util.List;
 import javax.ejb.Local;
@@ -18,4 +19,6 @@ public interface GuiaService {
     public List<Guia> listarGuiasPorFecha(String mes);
     
     public String totalConsumoMensual(String mes);
+    
+    public List<Dia> listarConsumoSemana(String mes, String semana);
 }

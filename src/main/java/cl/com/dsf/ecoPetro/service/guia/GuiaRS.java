@@ -1,5 +1,6 @@
 package cl.com.dsf.ecoPetro.service.guia;
 
+import cl.com.dsf.ecoPetro.modelo.Dia;
 import cl.com.dsf.ecoPetro.modelo.Guia;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -92,5 +93,12 @@ public class GuiaRS {
     @Path("consumoTotal/{mes}")
     public String totalConsumoMensual(@PathParam("mes") String mes) {
         return gs.totalConsumoMensual(mes);
+    }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("consumoSemanal/{mes}/{semana}")
+    public List<Dia> totalConsumoSemanal(@PathParam("mes") String mes, @PathParam("semana") String semana){
+        return gs.listarConsumoSemana(mes, semana);
     }
 }
