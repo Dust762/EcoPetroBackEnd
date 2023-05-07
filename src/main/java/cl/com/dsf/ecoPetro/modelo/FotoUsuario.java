@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "FotoUsuario.findAll", query = "SELECT f FROM FotoUsuario f"),
     @NamedQuery(name = "FotoUsuario.findByIdFotoUsuarios", query = "SELECT f FROM FotoUsuario f WHERE f.idFotoUsuarios = :idFotoUsuarios"),
     @NamedQuery(name = "FotoUsuario.findByFechaCargaFoto", query = "SELECT f FROM FotoUsuario f WHERE f.fechaCargaFoto = :fechaCargaFoto"),
-    @NamedQuery(name = "FotoUsuario.findByRutaFotoUsuarios", query = "SELECT f FROM FotoUsuario f WHERE f.rutaFotoUsuarios = :rutaFotoUsuarios")})
+    @NamedQuery(name = "FotoUsuario.findByNombreFotoUsuario", query = "SELECT f FROM FotoUsuario f WHERE f.nombreFotoUsuario = :nombreFotoUsuario")})
 public class FotoUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,9 +51,11 @@ public class FotoUsuario implements Serializable {
     @Temporal(TemporalType.DATE)
     @JsonbDateFormat(value = "yyyy/MM/dd")
     private Date fechaCargaFoto;
-    @Size(max = 100)
-    @Column(name = "rutaFotoUsuarios")
-    private String rutaFotoUsuarios;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "nombreFotoUsuario")
+    private String nombreFotoUsuario;
     @JoinColumn(name = "FK_idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
     private Usuario fKidUsuario;
@@ -65,9 +67,10 @@ public class FotoUsuario implements Serializable {
         this.idFotoUsuarios = idFotoUsuarios;
     }
 
-    public FotoUsuario(Integer idFotoUsuarios, Date fechaCargaFoto) {
+    public FotoUsuario(Integer idFotoUsuarios, Date fechaCargaFoto, String nombreFotoUsuario) {
         this.idFotoUsuarios = idFotoUsuarios;
         this.fechaCargaFoto = fechaCargaFoto;
+        this.nombreFotoUsuario = nombreFotoUsuario;
     }
 
     public Integer getIdFotoUsuarios() {
@@ -86,12 +89,12 @@ public class FotoUsuario implements Serializable {
         this.fechaCargaFoto = fechaCargaFoto;
     }
 
-    public String getRutaFotoUsuarios() {
-        return rutaFotoUsuarios;
+    public String getNombreFotoUsuario() {
+        return nombreFotoUsuario;
     }
 
-    public void setRutaFotoUsuarios(String rutaFotoUsuarios) {
-        this.rutaFotoUsuarios = rutaFotoUsuarios;
+    public void setNombreFotoUsuario(String nombreFotoUsuario) {
+        this.nombreFotoUsuario = nombreFotoUsuario;
     }
     @JsonbTransient
     public Usuario getFKidUsuario() {

@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ltcombustible.findAll", query = "SELECT l FROM Ltcombustible l"),
     @NamedQuery(name = "Ltcombustible.findByIdCombustible", query = "SELECT l FROM Ltcombustible l WHERE l.idCombustible = :idCombustible"),
     @NamedQuery(name = "Ltcombustible.findByLitrosTotales", query = "SELECT l FROM Ltcombustible l WHERE l.litrosTotales = :litrosTotales"),
-    @NamedQuery(name = "Ltcombustible.findByRutaFotoCargas", query = "SELECT l FROM Ltcombustible l WHERE l.rutaFotoCargas = :rutaFotoCargas"),
+    @NamedQuery(name = "Ltcombustible.findByNombreFotoCarga", query = "SELECT l FROM Ltcombustible l WHERE l.nombreFotoCarga = :nombreFotoCarga"),
     @NamedQuery(name = "Ltcombustible.findByFechaCarga", query = "SELECT l FROM Ltcombustible l WHERE l.fechaCarga = :fechaCarga")})
 public class Ltcombustible implements Serializable {
 
@@ -51,8 +51,8 @@ public class Ltcombustible implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
-    @Column(name = "RutaFotoCargas")
-    private String rutaFotoCargas;
+    @Column(name = "nombreFotoCarga")
+    private String nombreFotoCarga;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechaCarga")
@@ -69,10 +69,10 @@ public class Ltcombustible implements Serializable {
         this.idCombustible = idCombustible;
     }
 
-    public Ltcombustible(Integer idCombustible, int litrosTotales, String rutaFotoCargas, Date fechaCarga) {
+    public Ltcombustible(Integer idCombustible, int litrosTotales, String nombreFotoCarga, Date fechaCarga) {
         this.idCombustible = idCombustible;
         this.litrosTotales = litrosTotales;
-        this.rutaFotoCargas = rutaFotoCargas;
+        this.nombreFotoCarga = nombreFotoCarga;
         this.fechaCarga = fechaCarga;
     }
 
@@ -92,12 +92,12 @@ public class Ltcombustible implements Serializable {
         this.litrosTotales = litrosTotales;
     }
 
-    public String getRutaFotoCargas() {
-        return rutaFotoCargas;
+    public String getNombreFotoCarga() {
+        return nombreFotoCarga;
     }
 
-    public void setRutaFotoCargas(String rutaFotoCargas) {
-        this.rutaFotoCargas = rutaFotoCargas;
+    public void setNombreFotoCarga(String nombreFotoCarga) {
+        this.nombreFotoCarga = nombreFotoCarga;
     }
 
     public Date getFechaCarga() {

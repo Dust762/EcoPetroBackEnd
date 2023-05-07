@@ -14,12 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -47,16 +48,6 @@ public class Viaje implements Serializable {
     private Integer idViajes;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "Inicio")
-    private String inicio;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "Final")
-    private String final1;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "Viatico")
     private int viatico;
     @Basic(optional = false)
@@ -65,7 +56,12 @@ public class Viaje implements Serializable {
     private int distancia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidViajes")
     private List<Guia> guiaList;
-
+    @JoinColumn(name = "Inicio", referencedColumnName = "idDestinos")
+    @ManyToOne(optional = false)
+    private Destino inicio;
+    @JoinColumn(name = "Final", referencedColumnName = "idDestinos")
+    @ManyToOne(optional = false)
+    private Destino final1;
     public Viaje() {
     }
 
@@ -73,10 +69,8 @@ public class Viaje implements Serializable {
         this.idViajes = idViajes;
     }
 
-    public Viaje(Integer idViajes, String inicio, String final1, int viatico, int distancia) {
+    public Viaje(Integer idViajes, int viatico, int distancia) {
         this.idViajes = idViajes;
-        this.inicio = inicio;
-        this.final1 = final1;
         this.viatico = viatico;
         this.distancia = distancia;
     }
@@ -89,19 +83,11 @@ public class Viaje implements Serializable {
         this.idViajes = idViajes;
     }
 
-    public String getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(String inicio) {
-        this.inicio = inicio;
-    }
-
-    public String getFinal1() {
+    public Destino getFinal1() {
         return final1;
     }
 
-    public void setFinal1(String final1) {
+    public void setFinal1(Destino final1) {
         this.final1 = final1;
     }
 
@@ -128,6 +114,14 @@ public class Viaje implements Serializable {
 
     public void setGuiaList(List<Guia> guiaList) {
         this.guiaList = guiaList;
+    }
+
+    public Destino getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Destino inicio) {
+        this.inicio = inicio;
     }
 
     @Override

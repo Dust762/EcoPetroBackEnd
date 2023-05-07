@@ -67,6 +67,14 @@ public class ltCombustibleServiceRS {
     public Response agregarLtCombustible(@DefaultValue("true") @FormDataParam("enabled") boolean enabled,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition datoArchivo, @PathParam("id") int id) throws IOException {
+        File directorio = new File(PHOTO_DIRECTORY);
+        if (!directorio.isDirectory()) {
+            if (directorio.mkdirs()) {
+                System.out.println("Directorio creado");
+            }else{
+                System.out.println("No se pudo crear");
+            }
+        }
         String ubicacion = PHOTO_DIRECTORY + datoArchivo.getFileName();
         File objFile = new File(ubicacion);
         if (objFile.exists()) {
@@ -77,7 +85,7 @@ public class ltCombustibleServiceRS {
 
         String output = "File uploaded via Jersey based RESTFul Webservice to: " + ubicacion;
         Ltcombustible lc = lcs.encontrarLtCombustiblePorId(new Ltcombustible(id));
-        lc.setRutaFotoCargas(objFile.getName());
+        lc.setNombreFotoCarga(objFile.getName());
         lcs.modificarLtCombustible(lc);
 
         return Response.status(200).entity(output).build();
@@ -100,28 +108,29 @@ public class ltCombustibleServiceRS {
             e.printStackTrace();
         }
     }
-    
+
     @GET
     @Path("fotoCombustible/{ubicacion}")
     @Produces({"image/png", "image/jpeg"})
-    public Response retornarFotoCombustible(@PathParam("ubicacion") String ubicacion){
-        
+    public Response retornarFotoCombustible(@PathParam("ubicacion") String ubicacion) {
+
         System.out.println(ubicacion);
         File foto = null;
         try {
-           foto = new File(PHOTO_DIRECTORY + ubicacion);
+            foto = new File(PHOTO_DIRECTORY + ubicacion);
         } catch (Exception e) {
             System.out.println("No existe el archivo");
         }
-        
+
         if (foto.exists()) {
-            ResponseBuilder r = Response.ok((Object) foto); 
-            r.header("Content-Disposition","attachment; filename="+foto.getName());
+            ResponseBuilder r = Response.ok((Object) foto);
+            r.header("Content-Disposition", "attachment; filename=" + foto.getName());
             return r.build();
         }
         System.out.println("No se encontro");
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
     @PUT
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
