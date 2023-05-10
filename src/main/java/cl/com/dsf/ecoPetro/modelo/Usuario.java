@@ -83,7 +83,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "fechaCreacion")
     @Temporal(TemporalType.DATE)
-    @JsonbDateFormat(value = "yyyy/MM/dd")
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     private Date fechaCreacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fKidUsuario")
     private List<FotoUsuario> fotoUsuarioList;

@@ -4,8 +4,13 @@
  */
 package cl.com.dsf.ecoPetro.modelo;
 
+import cl.com.dsf.ecoPetro.resources.DateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
+import static javax.json.bind.annotation.JsonbDateFormat.DEFAULT_FORMAT;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,6 +62,7 @@ public class Ltcombustible implements Serializable {
     @NotNull
     @Column(name = "fechaCarga")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fechaCarga;
     @JoinColumn(name = "FK_idChofer", referencedColumnName = "Id_Usuario")
     @ManyToOne(optional = false)
@@ -99,11 +105,11 @@ public class Ltcombustible implements Serializable {
     public void setNombreFotoCarga(String nombreFotoCarga) {
         this.nombreFotoCarga = nombreFotoCarga;
     }
-
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     public Date getFechaCarga() {
         return fechaCarga;
     }
-
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     public void setFechaCarga(Date fechaCarga) {
         this.fechaCarga = fechaCarga;
     }

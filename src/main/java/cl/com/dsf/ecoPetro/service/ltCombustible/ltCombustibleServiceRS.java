@@ -1,11 +1,13 @@
 package cl.com.dsf.ecoPetro.service.ltCombustible;
 
 import cl.com.dsf.ecoPetro.modelo.Ltcombustible;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,7 +21,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -46,19 +47,19 @@ public class ltCombustibleServiceRS {
     }
 
     @POST
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarLtCombustible(Ltcombustible lc) {
         try {
+            
             lcs.agregarLtCombustible(lc);
-
-            return Response.ok().entity(lc).build();
+            return Response.ok().entity(lc.getIdCombustible()).build();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    final static String PHOTO_DIRECTORY = "D:\\fotosEcoPetro\\fotosCombustibles\\";
+    final static String PHOTO_DIRECTORY = "C:\\fotosEcoPetro\\fotosCombustibles\\";
 
     //EXPERIMENTAL
     @POST

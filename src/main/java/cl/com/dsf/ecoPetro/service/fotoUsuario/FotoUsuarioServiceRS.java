@@ -55,7 +55,7 @@ public class FotoUsuarioServiceRS {
         }
     }
     
-    final static String PHOTO_DIRECTORY = "D:\\fotosEcoPetro\\Usuarios\\";
+    final static String PHOTO_DIRECTORY = "C:\\fotosEcoPetro\\Usuarios\\";
     @POST
     @Path("foto/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
