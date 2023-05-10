@@ -36,8 +36,8 @@ public class GuiaRS {
     }
     
     @POST
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarUsuario(Guia g) {
         try {
             gs.agregarGuia(g);

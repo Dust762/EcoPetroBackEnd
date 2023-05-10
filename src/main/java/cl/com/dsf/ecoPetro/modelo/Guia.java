@@ -51,7 +51,7 @@ public class Guia implements Serializable {
     @NotNull
     @Column(name = "Fecha")
     @Temporal(TemporalType.DATE)
-    @JsonbDateFormat(value = "yyyy/MM/dd")
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     private Date fecha;
     @JoinColumn(name = "FK_idViajes", referencedColumnName = "idViajes")
     @ManyToOne(optional = false)

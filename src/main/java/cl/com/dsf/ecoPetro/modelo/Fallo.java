@@ -4,6 +4,7 @@
  */
 package cl.com.dsf.ecoPetro.modelo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbDateFormat;
@@ -48,7 +49,7 @@ public class Fallo implements Serializable {
     @NotNull
     @Column(name = "fechaFallo")
     @Temporal(TemporalType.DATE)
-    @JsonbDateFormat(value = "yyyy/MM/dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fechaFallo;
     @Size(max = 100)
     @Column(name = "Descripcion")
@@ -79,11 +80,11 @@ public class Fallo implements Serializable {
     public void setIdFallos(Integer idFallos) {
         this.idFallos = idFallos;
     }
-
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     public Date getFechaFallo() {
         return fechaFallo;
     }
-
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     public void setFechaFallo(Date fechaFallo) {
         this.fechaFallo = fechaFallo;
     }
