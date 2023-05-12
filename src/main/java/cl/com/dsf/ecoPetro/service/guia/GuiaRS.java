@@ -2,6 +2,7 @@ package cl.com.dsf.ecoPetro.service.guia;
 
 import cl.com.dsf.ecoPetro.modelo.Dia;
 import cl.com.dsf.ecoPetro.modelo.Guia;
+import cl.com.dsf.ecoPetro.modelo.Mes;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -91,7 +92,7 @@ public class GuiaRS {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("consumoTotal/{mes}")
-    public String totalConsumoMensual(@PathParam("mes") String mes) {
+    public Mes totalConsumoMensual(@PathParam("mes") String mes) {
         return gs.totalConsumoMensual(mes);
     }
     

@@ -2,6 +2,7 @@ package cl.com.dsf.ecoPetro.data.guia;
 
 import cl.com.dsf.ecoPetro.modelo.Dia;
 import cl.com.dsf.ecoPetro.modelo.Guia;
+import cl.com.dsf.ecoPetro.modelo.Mes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -73,15 +74,17 @@ public class guiaDaoImpl implements guiaDao {
     }
 
     @Override
-    public String totalConsumoMensual(String mes) {
+    public Mes totalConsumoMensual(String mes) {
         int totalConsumo = 0;
         List<Guia> temp = listarGuiasPorFecha(mes);
         for (int i = 0; i < temp.size(); i++) {
             totalConsumo += temp.get(i).getLtrConsumidos();
         }
         String resumen = "El consumo de combustubles del mes: " + mes + " fue:" + totalConsumo;
-
-        return resumen;
+        Mes m;
+        m = new Mes(tranformarMes(Integer.parseInt(mes)),totalConsumo);
+        
+        return m;
     }
 
     @Override
@@ -104,17 +107,17 @@ public class guiaDaoImpl implements guiaDao {
         for (int i = 0; i < temp.size(); i++) {
             int totalDia = 0;
             c.setTime(temp.get(i).getFecha());
-            dia =c.get(Calendar.DAY_OF_WEEK);
+            dia = c.get(Calendar.DAY_OF_WEEK);
             for (int j = 0; j < temp.size(); j++) {
                 if (temp.get(i).getFecha().equals(temp.get(j).getFecha())) {
                     totalDia = totalDia + temp.get(i).getLtrConsumidos();
                 }
             }
-            Dia dt = new Dia(tranformarDia(dia),totalDia);
+            Dia dt = new Dia(tranformarDia(dia), totalDia);
             dias.add(dt);
         }
-        Map<String, Dia> mapDias = new HashMap<String,Dia>(dias.size());
-        for(Dia d : dias){
+        Map<String, Dia> mapDias = new HashMap<String, Dia>(dias.size());
+        for (Dia d : dias) {
             mapDias.put(d.getNombreDia(), d);
         }
         dias.clear();
@@ -123,7 +126,7 @@ public class guiaDaoImpl implements guiaDao {
         }
         return dias;
     }
-    
+
     private String tranformarDia(int dia) {
         String nombreDia;
         switch (dia) {
@@ -154,4 +157,48 @@ public class guiaDaoImpl implements guiaDao {
         return nombreDia;
     }
 
+    private String tranformarMes(int mes) {
+        String nombreMes;
+        switch (mes) {
+            case 1:
+                nombreMes = "Enero";
+                break;
+            case 2:
+                nombreMes = "Febrero";
+                break;
+            case 3:
+                nombreMes = "Marzo";
+                break;
+            case 4:
+                nombreMes = "Abril";
+                break;
+            case 5:
+                nombreMes = "Mayo";
+                break;
+            case 6:
+                nombreMes = "Junio";
+                break;
+            case 7:
+                nombreMes = "Julio";
+                break;
+            case 8:
+                nombreMes = "Agosto";
+                break;
+            case 9:
+                nombreMes = "Septiembre";
+                break;
+            case 10:
+                nombreMes = "Octubre";
+                break;
+            case 11:
+                nombreMes = "Noviembre";
+                break;
+            case 12:
+                nombreMes = "Diciembre";
+                break;
+            default:
+                nombreMes = "NO se encontro";
+        }
+        return nombreMes;
+    }
 }

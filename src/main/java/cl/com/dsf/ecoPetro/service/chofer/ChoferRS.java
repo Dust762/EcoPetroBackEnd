@@ -35,8 +35,8 @@ public class ChoferRS {
     }
     
     @POST
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarChofer(Chofer c) {
         try {
             cs.agregarChofer(c);
@@ -49,8 +49,8 @@ public class ChoferRS {
     }
     
     @PUT
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response modificarChofer(@PathParam("id") int id, Chofer cMod) {
         try {

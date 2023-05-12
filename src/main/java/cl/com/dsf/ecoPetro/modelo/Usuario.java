@@ -186,7 +186,7 @@ public class Usuario implements Serializable {
     public void setChofer(Chofer chofer) {
         this.chofer = chofer;
     }
-    @JsonbTransient
+   @JsonbTransient
     public EstadoUsuario getEstadoUsuario() {
         return estadoUsuario;
     }

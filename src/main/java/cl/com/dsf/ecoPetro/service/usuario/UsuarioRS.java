@@ -35,8 +35,8 @@ public class UsuarioRS {
     }
     
     @POST
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response agregarUsuario(Usuario u) {
         try {
             us.agregarUsuario(u);
@@ -49,8 +49,8 @@ public class UsuarioRS {
     }
     
     @PUT
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response modificarUsuario(@PathParam("id") int id, Usuario uMod) {
         try {
